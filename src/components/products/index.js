@@ -5,7 +5,7 @@ import IMG from "../../images_tp/kd14.jpg"
 export const Products = () => {
     return (
         <>
-            <h1 className="title">Productos</h1>
+            <h1 className="title">Shoes</h1>
             <div className="products">
                 <div className="product">
                     <a href="#">

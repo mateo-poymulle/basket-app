@@ -1,9 +1,18 @@
-import React from 'react'
+import React from 'react';
+import {Switch, Route} from "react-router-dom";
+import { Inicio } from './Inicio/';
+import { Products } from './Products/';
+
+
 
 export const Pages = () => {
     return (
-        <div>
-            <h1>Paginas</h1>
-        </div>
+        <section>
+            <Switch>
+                <Route path="/" exact component={Inicio} />
+                <Route path="/products" exact component={Products} />
+            </Switch>
+
+        </section>
     )
 }

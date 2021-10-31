@@ -1,23 +1,24 @@
 import { BoxIconElement } from 'boxicons';
 import React from 'react';
 import img from "../../images_tp/Logo.png";
+import {Link} from "react-router-dom";
 
 export const Header = () => {
     return (
         <header>
 
-            <a href="#">
+            <Link to="/">
                 <div className="logo">
                     <img src={img} alt="logo" width="200" />
 
                 </div>
-            </a>
+            </Link>
             <ul>
                 <li>
-                    <a href="#">INICIO</a>
+                    <Link to="/">HOME</Link>
                 </li>
                 <li>
-                    <a href="#">SHOES</a>
+                    <Link to="/products">SHOES</Link>
                 </li>
             </ul>
             <div className="cart">
