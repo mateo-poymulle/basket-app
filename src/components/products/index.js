@@ -1,16 +1,20 @@
-import React,{useContext} from 'react';
-
+import React,{useContext, useState} from 'react';
+// import { useEffect } from 'react';
+// import axios from 'axios';
 import { DataContext } from '../../context/Dataprovider';
 import { ProductItem } from './Productitem';
-
 
 export const Products = () => {
 
 
     const value = useContext(DataContext);
     const[products] = value.products
+    
 
     console.log(products)
+
+
+
 
 
     return (
