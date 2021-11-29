@@ -1,21 +1,35 @@
 import React, { createContext, useEffect, useState } from "react";
+import { httpGet } from "../utils/httpFunctions.js";
 import Data from "../data.js";
 
 export const DataContext = createContext();
 
 export const DataProvider = (props) =>{
-    const[products, setProducts] = useState([])
+    const[shoes, setShoes] = useState([])
     const[menu, setMenu] = useState(false);
     const [carrito, setCarrito] = useState([])
     const[total, setTotal] = useState(0);
 
+    
+    const fetchShoes = () => {
+        httpGet('api/shoes/').then((res) => 
+        setShoes(res.data)   
+    
+        )
+      }
+
+
+    useEffect(fetchShoes, [])
+
+
+
 
     useEffect(() => {
-        const product = Data.items;
-        if (product){
-            setProducts(product)
+        const shoe = shoes.items;
+        if (shoe){
+            setShoes(shoe)
         }else{
-            setProducts([])
+            setShoes([])
         }
         
     },[])
@@ -26,10 +40,11 @@ export const DataProvider = (props) =>{
           return item.id !== id;
         })
         if(check){
-            const data = products.filter(product =>{
-                return product.id === id
+            const datas = shoes.filter(shoe =>{
+                return shoe.id === id
             })
-            setCarrito([...carrito, ...data])
+            setCarrito([...carrito, ...datas])
+            
         }else{
             alert("El producto ya ha sido añadido")
         }
@@ -56,12 +71,14 @@ export const DataProvider = (props) =>{
                 return prev + (item.price * item.cantidad)
             }, 0)
             setTotal(res)
+            
         }
         getTotal()
+        console.log(carrito)
     },[carrito])
 
     const value ={
-        products : [products],
+        shoes : [shoes],
         menu: [menu, setMenu],
         addCarrito: addCarrito,
         carrito: [carrito,setCarrito],

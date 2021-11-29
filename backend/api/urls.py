@@ -1,11 +1,15 @@
 from django.urls import path, include
 from rest_framework import routers
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from . import views
-from api.views import ShoesViewSet, RegisterView, me
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+from api.views import RegisterView, ShoesViewSet, me, ActivityViewSet
 
 router = routers.DefaultRouter()
 router.register(r'shoes', ShoesViewSet)
+router.register(r'activities', ActivityViewSet)
 
 
 urlpatterns = [

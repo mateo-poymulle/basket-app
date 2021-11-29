@@ -1,12 +1,25 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import Card from "../../images_tp/kd14.jpg";
-import {DataContext} from "../../context/Dataprovider"
+import {DataContext} from "../../context/Dataprovider";
+import { httpGet } from '../../utils/httpFunctions';
 
 export const Carrito = () => {
     const value = useContext(DataContext)
     const[menu, setMenu] = value.menu;
     const[carrito,setCarrito] = value.carrito;
     const[total] = value.total;
+    const [shoes, setShoes] = useState([])
+
+    const fetchShoes = () => {
+        httpGet('api/shoes/').then((res) => 
+        setShoes(res.data)   
+    
+        )
+      }
+
+
+    useEffect(fetchShoes, [])
+
 
     const tooglefalse = () => {
         setMenu(false)
@@ -51,7 +64,7 @@ export const Carrito = () => {
     }
 
 
-
+    
     return (
         <div className={show1}>
             <div className={show2}>
@@ -67,20 +80,20 @@ export const Carrito = () => {
                     }}> Carrito Vacio</h2>: <> 
 
                     {
-                    carrito.map((product)=>(
-                        <div className="carrito__item" key={product.id}>
-                        <img src={product.image.default}></img>
+                    carrito.map((shoe)=>(
+                        <div className="carrito__item" key={shoe.id}>
+                        <img src={shoe.image}></img>
                         <div>
-                            <h3>{product.title}</h3>
-                            <p className="price">${product.price}</p>
+                            <h3>{shoe.title}</h3>
+                            <p className="price">${shoe.price}</p>
                         </div>
                         <div>
-                            <box-icon name="up-arrow" type="solid" onClick={() => suma(product.id)}></box-icon>
-                            <p className="cantidad">{product.cantidad}</p>
-                            <box-icon name="down-arrow" type="solid" onClick={() => resta(product.id)}></box-icon>
+                            <box-icon name="up-arrow" type="solid" onClick={() => suma(shoe.id)}></box-icon>
+                            <p className="cantidad">{shoe.cantidad}</p>
+                            <box-icon name="down-arrow" type="solid" onClick={() => resta(shoe.id)}></box-icon>
                         </div>
 
-                        <div className="remove_item" onClick={ () => removeProduct(product.id)}>
+                        <div className="remove_item" onClick={ () => removeProduct(shoe.id)}>
                             <box-icon name="trash"></box-icon>
 
                         </div>

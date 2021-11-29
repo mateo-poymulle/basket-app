@@ -13,7 +13,9 @@ const LoginScreen = () => {
   const login = (e) => {
     e.preventDefault()
     httpPost('api/login/', {username: username, password: password}).then((res) => {
-      console.log(res.data)
+      localStorage.setItem('token', res.data.access)
+      history.push('/products')
+      
     })
   }
 
@@ -22,7 +24,7 @@ const LoginScreen = () => {
       <div className='welcome-text-container'><h1>Bienvenidos a nuestra página de Shoes</h1></div>
       <form className='form-container' onSubmit={login}>
         <div className="mb-3">
-          <label htmlFor="exampleFormControlInput1" className="form-label">Email address</label>
+          <label htmlFor="exampleFormControlInput1" className="form-label">Username</label>
           <input
             className="form-control"
             id="exampleFormControlInput1"
