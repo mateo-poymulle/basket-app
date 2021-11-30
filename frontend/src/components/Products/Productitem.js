@@ -53,7 +53,7 @@ export const ProductItem = ({
                     Añadir al carrito
                 </button>
                 <div>
-                    <a href="#" className="btn"> Vista</a>
+                    <a href={image} className="btn"> Vista</a>
                 </div>
             </div>
         </div>
