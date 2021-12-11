@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react';
-import Card from "../../images_tp/kd14.jpg";
+
 import {DataContext} from "../../context/Dataprovider";
 import { httpGet } from '../../utils/httpFunctions';
 
@@ -8,7 +8,7 @@ export const Carrito = () => {
     const[menu, setMenu] = value.menu;
     const[carrito,setCarrito] = value.carrito;
     const[total] = value.total;
-    const [shoes, setShoes] = useState([])
+    const [ shoes, setShoes] = useState([])
 
     const fetchShoes = () => {
         httpGet('api/shoes/').then((res) => 
@@ -82,7 +82,7 @@ export const Carrito = () => {
                     {
                     carrito.map((shoe)=>(
                         <div className="carrito__item" key={shoe.id}>
-                        <img src={shoe.image}></img>
+                        <img src={shoe.image} alt={shoe.title}></img>
                         <div>
                             <h3>{shoe.title}</h3>
                             <p className="price">${shoe.price}</p>

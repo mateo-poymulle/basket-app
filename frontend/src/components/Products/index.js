@@ -1,14 +1,32 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React,{ useEffect, useState} from 'react';
 // import { useEffect } from 'react';
-import axios from 'axios';
+
 import { DataContext } from '../../context/Dataprovider';
 import { httpGet } from '../../utils/httpFunctions';
 import { ProductItem } from './Productitem';
 
 export const Products = () => {
-    
+    const [filtered, setFiltered] = useState(false)
     const [shoes, setShoes] = useState([])
-    const value = useContext(DataContext);
+    
+
+    const clickFunction = () => {
+        setFiltered(!filtered)
+    }
+
+    const getName = () => {
+        return filtered ? "Filtrar" :  "Dejar de filtrar"
+    }
+
+    let finalSubjects;
+
+    if (filtered) {
+        finalSubjects = shoes.filter(() => {
+            return 
+        })
+    } else {
+        finalSubjects = shoes
+    }
     
     
     const fetchShoes = () => {
@@ -24,9 +42,17 @@ export const Products = () => {
     return (
         <>
             <h1 className="title">Shoes</h1>
+            <div className="main-div">
+                <button className="btn btn-primary" onClick={clickFunction}>
+                    {getName()}
+                </button>
+
+            </div>
             <div className="products">
+
+            
             {
-                shoes.map(shoe => (
+                finalSubjects.map(shoe => (
                     <ProductItem 
                     key={shoe.id}
                     id={shoe.id}

@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
-import IMG from "../../images_tp/kd14.jpg";
-import { Link } from 'react-router-dom';
+
 import { DataContext } from '../../context/Dataprovider';
 import { httpGet } from '../../utils/httpFunctions';
 import { useEffect, useState } from 'react';
@@ -8,13 +7,13 @@ import { useEffect, useState } from 'react';
 
 
 export const ProductItem = ({
-    key,
+    
     id,
     title,
     price,
     image,
-    category,
-    cantidad
+    category
+    
     
 }) => {
     const [shoes, setShoes] = useState([])

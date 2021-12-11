@@ -32,6 +32,9 @@ export const Header = () => {
                 <li>
                     <Link to="/login">LOGIN</Link>
                 </li>
+                <li>
+                    <Link to="/product">crear</Link>
+                </li>
             </ul>
             <div className="cart" onClick={toogleMenu}>
                 <box-icon name="cart"></box-icon>

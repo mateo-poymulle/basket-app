@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { httpGet } from "../utils/httpFunctions.js";
-import Data from "../data.js";
+
 
 export const DataContext = createContext();
 
@@ -32,7 +32,7 @@ export const DataProvider = (props) =>{
             setShoes([])
         }
         
-    },[])
+    },[shoes.items])
 
 
     const addCarrito = (id) =>{
@@ -74,7 +74,7 @@ export const DataProvider = (props) =>{
             
         }
         getTotal()
-        console.log(carrito)
+        
     },[carrito])
 
     const value ={

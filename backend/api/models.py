@@ -24,7 +24,7 @@ class Shoes(models.Model):
     title = models.CharField(max_length=50, null=True)
     category = models.CharField(max_length=20, null=True)
     price = models.FloatField(null=True)
-    image = models.ImageField(upload_to=url)
+    image = models.ImageField(upload_to=url, null=True, blank=True)
     cantidad = models.IntegerField(default=1)
 
     def save(self, force_insert=False, force_update=False, using=None,
