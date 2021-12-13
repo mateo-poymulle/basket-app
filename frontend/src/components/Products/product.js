@@ -5,6 +5,7 @@ import axios from "axios";
 import { ProductItem } from "./Productitem";
 
 import { EditItem } from "./editItem";
+import { Link } from "react-router-dom";
 
 
 
@@ -158,7 +159,9 @@ handleList= () => {
               id="image"
               accept="image/png, image/jpeg" onChange={this.shoeImageChange} required />
           </p>
+          
           <input type="submit" />
+          
         </form>
 
         

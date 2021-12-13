@@ -12,8 +12,10 @@ import {
   ModalBody,
   FormGroup,
   ModalFooter,
+  Form
 } from "reactstrap";
 import { httpGet } from "../../utils/httpFunctions";
+import { Link } from "react-router-dom";
 
 
 const baseUrl = 'http://localhost:8000/api/shoes/'
@@ -50,15 +52,13 @@ export const Edit = () => {
     
     
   }
-  const shoeImageChange = (e) => {
-    setShoeSeleccionada({
-      image: e.target.files[0],
-      
-      
-    })
-    console.log(e.target.files[0])
-  };
 
+
+ const handleFileSelected =(e) =>{
+  setShoeSeleccionada({ image: e.target.files[0]});
+    }
+
+  
   const peticionGet = async () => {
     await axios.get(baseUrl)
       .then(response => {
@@ -77,27 +77,35 @@ export const Edit = () => {
     })
   }
 
-  const peticionPut = async () => {
-    await axios.put(baseUrl + ShoeSeleccionada.id+'/', ShoeSeleccionada, {
-      headers: {
-        authorization: 'Bearer ' + localStorage.getItem('token')
+  const peticionPut = async (e) => {
+    
+      e.preventDefault();
+
+      let formData = new FormData();
+      formData.append( 'title', ShoeSeleccionada.title);
+      formData.append( 'category', ShoeSeleccionada.category);
+      formData.append( 'price', ShoeSeleccionada.price);
+      formData.append( 'cantidad', ShoeSeleccionada.cantidad);
+      
+      
+      if (ShoeSeleccionada.image!=null) {
+          formData.append('image', ShoeSeleccionada.image);
       }
-    })
-      .then(response => {
-        var shoeNueva = shoes;
-        shoeNueva.map(shoe => {
-          if (ShoeSeleccionada.id === shoe.id) {
-            shoe.title = ShoeSeleccionada.title;
-            shoe.category = ShoeSeleccionada.category;
-            shoe.price = ShoeSeleccionada.price;
-            shoe.image = ShoeSeleccionada.image;
-            shoe.cantidad = ShoeSeleccionada.cantidad;
+      const RecipeId = ShoeSeleccionada.id;
+      await axios.put(`http://127.0.0.1:8000/api/shoes/${RecipeId}/`, formData,  {
+          headers: {
+            authorization: 'Bearer ' + localStorage.getItem('token')
           }
-        })
-        setShoes(shoeNueva);
-        abrirCerrarModalActualizar();
+        } )
+        .then(res => {
+        
+          abrirCerrarModalActualizar();
       })
-  }
+      .catch(function (error) {
+          alert("error");
+          console.log(error);
+      })
+};
 
   const peticionDelete = async () => {
     await axios.delete(baseUrl + ShoeSeleccionada.id, {
@@ -149,116 +157,12 @@ export const Edit = () => {
 
 
 
-  const bodyInsertar = (
-    <div>
-      <ModalHeader>
-        <div><h3>Insertar Personaje</h3></div>
-      </ModalHeader>
 
-      <ModalBody>
-        <FormGroup>
-          <label>
-            Id:
-          </label>
-
-          <input
-            
-            className="form-control"
-            
-            readOnly
-            type="text"
-            
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <label>
-            Title:
-          </label>
-          <input
-            id='title'
-            className="form-control"
-            name="title"
-            type="text"
-            value={ShoeSeleccionada.title}
-            onChange={handleChange}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <label>
-            Category:
-          </label>
-          <input
-            id='category'
-            className="form-control"
-            name="category"
-            type="text"
-            value={ShoeSeleccionada.category}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <label>
-            Price:
-          </label>
-          <input
-            id='price'
-            className="form-control"
-            name="price"
-            type="number"
-            value={ShoeSeleccionada.price}
-            onChange={handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <label>
-            Image:
-          </label>
-          <input
-            type="file"
-            id='image'
-            
-            accept=" image/jpg"
-            
-            onChange={handleChange} required
-          />
-        </FormGroup>
-        <FormGroup>
-          <label>
-            Cantidad:
-          </label>
-          <input
-            id='cantidad'
-            className="form-control"
-            name="cantidad"
-            type="number"
-            value={ShoeSeleccionada.cantidad}
-            onChange={handleChange}
-          />
-        </FormGroup>
-      </ModalBody>
-
-      <ModalFooter>
-        <Button
-          color="primary"
-          onClick={() => peticionPost()}
-        >
-          Insertar
-        </Button>
-        <Button
-          className="btn btn-danger"
-          onClick={() => abrirCerrarModalInsertar()}
-        >
-          Cancelar
-        </Button>
-      </ModalFooter>
-    </div>
-  )
 
 
   const bodyActualizar = (
     <div>
+      <Form onSubmit={peticionPut}>
       <ModalHeader>
         <div><h3>Editar Registro</h3></div>
       </ModalHeader>
@@ -326,7 +230,7 @@ export const Edit = () => {
           <input
             type="file"
             id="image"
-            accept="image/png, image/jpeg" onChange={handleChange} required
+            accept="image/png, image/jpeg , image/jpg" onChange={handleChange} required
             name="image"
 
           />
@@ -349,7 +253,7 @@ export const Edit = () => {
       <ModalFooter>
         <Button
           color="primary"
-          onClick={() => peticionPut()}
+          type="submit"
         >
           Editar
         </Button>
@@ -360,13 +264,14 @@ export const Edit = () => {
           Cancelar
         </Button>
       </ModalFooter>
+      </Form>
     </div>
   )
 
 
   const bodyEliminar = (
     <div >
-      <p>Estás seguro que deseas eliminar la consola <b>{ShoeSeleccionada && ShoeSeleccionada.title}</b> ? </p>
+      <p>Estás seguro que deseas eliminar la Shoe <b>{ShoeSeleccionada && ShoeSeleccionada.title}</b> ? </p>
       <div align="right">
         <Button color="secondary" onClick={() => peticionDelete()} >Sí</Button>
         <Button onClick={() => abrirCerrarModalEliminar()}>No</Button>
@@ -385,7 +290,9 @@ export const Edit = () => {
       <Container>
         <br />
         <br />
-        <Button color="success" onClick={() => abrirCerrarModalInsertar()}>Crear</Button>
+        <Link to="/product">
+        <Button color="success" >Crear</Button>
+        </Link>
         <br />
         <br />
         <br />
@@ -413,12 +320,14 @@ export const Edit = () => {
                   <td>{shoe.image}</td>
                   <td>{shoe.cantidad}</td>
                   <td>
+                    
                     <Button
                       color="primary"
                       onClick={() => seleccionarShoe(shoe, 'Editar')}
                     >
                       Editar
                     </Button>
+                   
                     <Button color="danger" onClick={() => seleccionarShoe(shoe, 'Eliminar')}>Eliminar</Button>
                   </td>
                 </tr>)
@@ -433,9 +342,7 @@ export const Edit = () => {
 
 
 
-      <Modal isOpen={modalInsertar} onClose={abrirCerrarModalInsertar}>
-        {bodyInsertar}
-      </Modal>
+      
 
       <Modal
         isOpen={modalEliminar}
