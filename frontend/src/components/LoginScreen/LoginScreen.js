@@ -25,11 +25,15 @@ const LoginScreen = () => {
   const register = (e) => {
     e.preventDefault()
     httpPost('api/register/', {username: regUsername, password: regPassword}).then((res) => {
-      localStorage.setItem(res.data.access)
+      localStorage.setItem('token',res.data.access)
       
-      history.push('/login')
+      history.push('/')
       
     })
+  }
+  function myFunction() {
+    alert("El usuario "+ regUsername+ " se ha creado satisfactoriamente");
+    
   }
 
   return (
@@ -86,7 +90,7 @@ const LoginScreen = () => {
             placeholder="Password" />
         </div>
         <div className={'button-container'}>
-          <button type="submit" className="btn btn-primary">Register</button>
+          <button type="submit" className="btn btn-primary" onClick={myFunction}>Register</button>
         </div>
       </form>
 

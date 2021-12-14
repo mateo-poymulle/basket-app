@@ -160,7 +160,7 @@ handleList= () => {
               accept="image/png, image/jpeg" onChange={this.shoeImageChange} required />
           </p>
           
-          <input type="submit" />
+          <input type="submit"  />
           
         </form>
 

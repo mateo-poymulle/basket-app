@@ -15,7 +15,7 @@ import {
   Form
 } from "reactstrap";
 import { httpGet } from "../../utils/httpFunctions";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 
 const baseUrl = 'http://localhost:8000/api/shoes/'
@@ -37,7 +37,7 @@ export const Edit = () => {
 
   }
   const [shoes, setShoes] = useState([])
-
+  const history = useHistory()
   const [selectedFile, setSelectedFile] = useState(null);
   const [modalActualizar, setModalActualizar] = useState(false);
   const [modalInsertar, setModalInsertar] = useState(false);
@@ -55,7 +55,7 @@ export const Edit = () => {
 
 
  const handleFileSelected =(e) =>{
-  setShoeSeleccionada({ image: e.target.files[0]});
+  setShoeSeleccionada({ ...ShoeSeleccionada,image: e.target.files[0]});
     }
 
   
@@ -98,7 +98,7 @@ export const Edit = () => {
           }
         } )
         .then(res => {
-        
+          history.push('/products')
           abrirCerrarModalActualizar();
       })
       .catch(function (error) {
@@ -230,7 +230,7 @@ export const Edit = () => {
           <input
             type="file"
             id="image"
-            accept="image/png, image/jpeg , image/jpg" onChange={handleChange} required
+            accept="image/png, image/jpeg , image/jpg" onChange={handleFileSelected} required
             name="image"
 
           />

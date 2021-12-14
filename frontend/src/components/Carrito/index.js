@@ -1,9 +1,11 @@
 import React, {useContext, useState, useEffect} from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import {DataContext} from "../../context/Dataprovider";
 import { httpGet } from '../../utils/httpFunctions';
 
 export const Carrito = () => {
+    const history = useHistory()
     const value = useContext(DataContext)
     const[menu, setMenu] = value.menu;
     const[carrito,setCarrito] = value.carrito;
@@ -62,6 +64,10 @@ export const Carrito = () => {
             }
             
     }
+    function myFunction() {
+        alert("El Pago se ha realizado con exito!");
+        
+      }
 
 
     
@@ -106,8 +112,9 @@ export const Carrito = () => {
                 </div>
                     <div className="carrito_footer">
                         <h3>Total: ${total}</h3>
-                        <button className="btn">Payment</button>
-
+                        
+                        <button className="btn" onClick={myFunction}>Payment</button>
+                        
                     </div>
             </div>
         </div>
