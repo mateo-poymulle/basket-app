@@ -4,7 +4,6 @@ import { httpGet, httpPost } from "../../utils/httpFunctions";
 import axios from "axios";
 import { ProductItem } from "./Productitem";
 
-import { EditItem } from "./editItem";
 import { Link } from "react-router-dom";
 
 

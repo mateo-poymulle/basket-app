@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { DataContext } from '../../context/Dataprovider';
 import { httpGet } from '../../utils/httpFunctions';
 import { ProductItem } from './Productitem';
-import Shoes from './Shoes';
+
 import axios from 'axios';
 
 export const Products = () => {
