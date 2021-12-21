@@ -1,20 +1,20 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from api.models import Shoes, Activity, ExtendedUser
+from api.models import Shoes, ExtendedUser, Activity
 from rest_framework.exceptions import ValidationError
 
 
 
 
-class ActivityCourseSerializer(serializers.ModelSerializer):
+class ActivityShoesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shoes
         fields = "__all__"
 
 
 class ActivitySerializer(serializers.ModelSerializer):
-    shoes = ActivityCourseSerializer()
+    shoe = ActivityShoesSerializer()
 
     class Meta:
         model = Activity
@@ -30,10 +30,10 @@ class ShoesSerializer(serializers.ModelSerializer):
         model = Shoes
         fields = "__all__"
 
-    def validate_name(self, name):
-        if name == 'name not valid':
+    def validate_title(self, title):
+        if title == 'name not valid':
             raise ValidationError("name is not valid")
-        return name
+        return title
 
     def get_custom_field(self, shoe):
         return shoe.activities.count()

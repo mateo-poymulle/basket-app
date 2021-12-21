@@ -16,26 +16,25 @@ export const Products = () => {
 
     const handleChange = e => {
         setBusqueda(e.target.value);
-        filtrar(e.target.value);
+        
     }
 
-    const filtrar = (terminoBusqueda) => {
-        var resultadosBusqueda = shoes.filter((elemento) => {
-            if (elemento.title.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
-            
-            ) {
-                return elemento;
-            }
-        });
-        setShoes(resultadosBusqueda);
-    }
+    const filtrar = async() => {
+        await axios.get(`http://127.0.0.1:8000/api/shoes/?title=${busqueda}`)
+        .then(response=>{
+          setShoes(response.data);
+          
+        }).catch(error=>{
+          console.log(error);
+        })
+      }
 
 
     
 
 
     const fetchShoes = async()=>{
-        await axios.get("http://127.0.0.1:8000/api/shoes/")
+        await axios.get(`http://127.0.0.1:8000/api/shoes/`)
         .then(response=>{
           setShoes(response.data);
           
@@ -56,11 +55,14 @@ export const Products = () => {
                 <input
                     className="form-control inputBuscar"
                     value={busqueda}
-                    placeholder="Búsqueda por nombre de zapatilla"
+                    placeholder="Búsqueda por titulo de zapatilla"
                     onChange={handleChange}
                 />
-                <button className="btn btn-success" onClick={fetchShoes}>
+                <button className="btn btn-success" onClick={filtrar}>
                     Buscar
+                </button>
+                <button className="btn btn-success" onClick={fetchShoes}>
+                    Filtrar
                 </button>
             </div>
             

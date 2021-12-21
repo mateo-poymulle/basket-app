@@ -13,6 +13,14 @@ class ShoesViewSet(viewsets.ModelViewSet):
     serializer_class = ShoesSerializer
     queryset = Shoes.objects.all()
 
+    def get_queryset(self):
+        queryset = self.queryset.all()
+        title = self.request.query_params.get('title')
+        if title is not None:
+            queryset = queryset.filter(title=title)
+        return queryset
+
+
     def get_permissions(self):
         if self.action == 'list':
             # si la action es list utilizo estos permisos
@@ -43,12 +51,9 @@ class ActivityViewSet(viewsets.ModelViewSet):
         # sin el .all() el queryset devuelve siempre lo mismo (no se vuelve a ejecutar la query en la base de datos)
         # con el .all() hacemos que se reevalue en cada request, asi devuelve un resultado actualizado
         queryset = self.queryset.all()
-        name = self.request.query_params.get('name')
-        shoe_name = self.request.query_params.get('shoe_name')
-        if name is not None:
-            queryset = queryset.filter(name=name)
-        if shoe_name is not None:
-            queryset = queryset.filter(shoe__name=shoe_name)
+        shoe_title = self.request.query_params.get('shoe_title')
+        if shoe_title is not None:
+            queryset = queryset.filter(shoe__title=shoe_title)
         return queryset
 
 

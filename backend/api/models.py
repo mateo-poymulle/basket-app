@@ -26,6 +26,8 @@ class Shoes(models.Model):
     price = models.FloatField(null=True)
     image = models.ImageField(upload_to=url, null=True, blank=True)
     cantidad = models.IntegerField(default=1)
+    created_at = models.DateTimeField(editable=False, auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(editable=False, auto_now=True, null=True)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -41,5 +43,5 @@ class Shoes(models.Model):
 class Activity(models.Model):
     title = models.CharField(max_length=50)
     category = models.CharField(max_length=20)
-    price = models.FloatField(null=True)
+
     shoe = models.ForeignKey(Shoes, on_delete=models.CASCADE, related_name='activities')
