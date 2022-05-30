@@ -7,9 +7,12 @@ const LoginScreen = () => {
 
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
-
+  
   const[regUsername, setRegUsername] = useState()
   const[regPassword, setRegPassword] = useState()
+  const[regFirstName, setFirstName] = useState()
+  const[regLastName, setLastName] = useState()
+  const[regemail, setEmail] = useState()
 
   const history = useHistory();
 
@@ -24,7 +27,7 @@ const LoginScreen = () => {
 
   const register = (e) => {
     e.preventDefault()
-    httpPost('api/register/', {username: regUsername, password: regPassword}).then((res) => {
+    httpPost('api/register/', {username: regUsername, password: regPassword, email: regemail, first_name: regFirstName,last_name: regLastName }).then((res) => {
       localStorage.setItem('token',res.data.access)
       
       history.push('/')
@@ -38,14 +41,14 @@ const LoginScreen = () => {
 
   return (
     <div className='login-screen'>
-      <div className='welcome-text-container'><h1>Bienvenidos a nuestra página de Shoes</h1></div>
+    
       <form className='form-container' onSubmit={login}>
         <div className="mb-3">
           <h2>LOGIN</h2>
           <label htmlFor="exampleFormControlInput1" className="form-label">Username</label>
           <input
             className="form-control"
-            id="exampleFormControlInput1"
+            
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
@@ -58,7 +61,7 @@ const LoginScreen = () => {
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             className="form-control"
-            id="exampleFormControlInput1"
+            
             placeholder="Password" />
         </div>
         <div className={'button-container'}>
@@ -73,11 +76,41 @@ const LoginScreen = () => {
           <label htmlFor="exampleFormControlInput1" className="form-label">Username</label>
           <input
             className="form-control"
-            id="exampleFormControlInput1"
+            
             value={regUsername}
             onChange={(e) => setRegUsername(e.target.value)}
             placeholder="Username"
           />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">First Name</label>
+          <input
+            value={regFirstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            
+            className="form-control"
+            
+            placeholder="First Name" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">Last Name</label>
+          <input
+            value={regLastName}
+            onChange={(e) => setLastName(e.target.value)}
+            
+            className="form-control"
+            
+            placeholder="last name" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="exampleFormControlTextarea1" className="form-label">Email</label>
+          <input
+            value={regemail}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            className="form-control"
+            
+            placeholder="email" />
         </div>
         <div className="mb-3">
           <label htmlFor="exampleFormControlTextarea1" className="form-label">Password</label>
@@ -86,7 +119,7 @@ const LoginScreen = () => {
             onChange={(e) => setRegPassword(e.target.value)}
             type="password"
             className="form-control"
-            id="exampleFormControlInput1"
+            
             placeholder="Password" />
         </div>
         <div className={'button-container'}>
